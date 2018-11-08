@@ -21,5 +21,6 @@ from risks import views
 
 urlpatterns = [
     url(r'^api/risk/$', views.InsuranceRiskListView.as_view(), name='insurance-risks'),
+    url(r'^api/client/risk/$', views.ClientInsuranceRiskListView.as_view(), name='client-insurance-risks'),
     url(r'^admin/', admin.site.urls),
 ]
