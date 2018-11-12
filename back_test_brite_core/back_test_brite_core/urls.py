@@ -21,6 +21,7 @@ from risks import views
 
 
 urlpatterns = [
+    url(r'^api/client/', include('clients.urls')),
     url(r'^api/', include('risks.urls')),
 
     # url(r'^api/risk/create/$', csrf_exempt(views.InsuranceRiskCreateView.as_view()), name='insurance-risk-create'),

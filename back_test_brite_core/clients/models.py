@@ -20,6 +20,11 @@ class ClientInsuranceRisk(models.Model):
 
 
 class ClientField(models.Model):
+    client_insurance_risk = models.ForeignKey(
+        ClientInsuranceRisk,
+        verbose_name=_('client insurance risk'),
+        related_name='client_fields',
+    )
     field = models.ForeignKey(
         risk_models.Field,
         verbose_name=_('field'),
