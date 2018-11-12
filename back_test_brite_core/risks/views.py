@@ -20,6 +20,11 @@ class InsuranceRiskCreate(generics.CreateAPIView):
     serializer_class = serializers.InsuranceRiskSerializer
 
 
+class InsuranceRiskRetrieve(generics.RetrieveAPIView):
+    queryset = models.InsuranceRisk.objects.all()
+    serializer_class = serializers.InsuranceRiskSerializer
+
+
 class InsuranceRiskCreateView(generic.View):
 
     def post(self, request, *args, **kwargs):

@@ -8,6 +8,9 @@ urlpatterns = [
     url(r'^risk/$', views.InsuranceRiskList.as_view(), name='insurance-risk-list'),
 
     url(r'^risk/create/$', views.InsuranceRiskCreate.as_view(), name='insurance-risk-create'),
+
+    url(r'^risk/(?P<pk>\d+)/$', views.InsuranceRiskRetrieve.as_view(), name='insurance-risk-detail'),
+
     # url(r'^api/risk/create/$', csrf_exempt(views.InsuranceRiskCreateView.as_view()), name='insurance-risk-create'),
 
     # url(r'^api/client/risk/$', views.ClientInsuranceRiskListView.as_view(), name='client-insurance-risks'),

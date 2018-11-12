@@ -32,8 +32,8 @@ class Field(models.Model):
     # field_type = models.PositiveSmallIntegerField(_('type'), choices=TYPE_CHOICES)
     field_type = models.CharField(_('type'), max_length=10)
 
-    class Meta:
-        ordering = ('name',)
+    # class Meta:
+    #     ordering = ('name',)
 
     def __str__(self):
         return self.name

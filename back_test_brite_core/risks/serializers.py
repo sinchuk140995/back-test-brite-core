@@ -13,7 +13,7 @@ class InsuranceRiskListSerializer(serializers.ModelSerializer):
 class SelectOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.SelectOption
-        fields = ('name',)
+        fields = ('id', 'name')
 
 
 class FieldSerializer(serializers.ModelSerializer):
@@ -22,9 +22,6 @@ class FieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Field
         fields = ('id', 'name', 'field_type', 'options')
-
-    def create(self, validated_data):
-        print(validated_data)
 
 
 class InsuranceRiskSerializer(serializers.ModelSerializer):
@@ -39,8 +36,14 @@ class InsuranceRiskSerializer(serializers.ModelSerializer):
         insurance_risk = models.InsuranceRisk.objects.create(**validated_data)
 
         for field_data in fields_data:
-            field_serializer = FieldSerializer(data=field_data)
-            if field_serializer.is_valid():
-                field_serializer.save()
-            # field = models.Field.objects.create(insurance_risk=insurance_risk, **field)
+            options = None
+            if 'options' in field_data:
+                options = field_data.pop('options')
+
+            field = models.Field.objects.create(insurance_risk=insurance_risk,
+                                                **field_data)
+            if options:
+                for option_data in options:
+                    models.SelectOption.objects.create(field=field,
+                                                       **option_data)
         return insurance_risk
