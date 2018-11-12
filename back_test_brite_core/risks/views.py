@@ -1,16 +1,23 @@
 from django.http import JsonResponse
 from django.views import generic
+from rest_framework import generics
+from rest_framework import mixins
 
 import time
 import json
 
+from . import models
+from . import serializers
 
-class InsuranceRiskListView(generic.View):
 
-    def get(self, request, *args, **kwargs):
-        # time.sleep(2)
-        insurance_risks = [{'id': x, 'name': 'Risk ' + str(x)} for x in range(1, 11)]
-        return JsonResponse(insurance_risks, safe=False)
+class InsuranceRiskList(generics.ListAPIView):
+    queryset = models.InsuranceRisk.objects.all()
+    serializer_class = serializers.InsuranceRiskListSerializer
+
+
+class InsuranceRiskCreate(generics.CreateAPIView):
+    queryset = models.InsuranceRisk.objects.all()
+    serializer_class = serializers.InsuranceRiskSerializer
 
 
 class InsuranceRiskCreateView(generic.View):

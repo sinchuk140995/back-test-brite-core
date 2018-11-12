@@ -14,9 +14,9 @@ class InsuranceRisk(models.Model):
 
 
 class Field(models.Model):
-    STRING = 1
-    NUMBER = 2
-    SELECT = 3
+    STRING = 'text'
+    NUMBER = 'number'
+    SELECT = 'select'
     TYPE_CHOICES = (
         (STRING, 'String'),
         (NUMBER, 'Number'),
@@ -29,7 +29,8 @@ class Field(models.Model):
         verbose_name=_('insurance risk'),
         related_name='fields',
     )
-    field_type = models.PositiveSmallIntegerField(_('type'), choices=TYPE_CHOICES)
+    # field_type = models.PositiveSmallIntegerField(_('type'), choices=TYPE_CHOICES)
+    field_type = models.CharField(_('type'), max_length=10)
 
     class Meta:
         ordering = ('name',)

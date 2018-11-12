@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.decorators.csrf import csrf_exempt
 
@@ -21,10 +21,11 @@ from risks import views
 
 
 urlpatterns = [
-    url(r'^api/risk/$', views.InsuranceRiskListView.as_view(), name='insurance-risks'),
-    url(r'^api/risk/create/$', csrf_exempt(views.InsuranceRiskCreateView.as_view()), name='insurance-risk-create'),
-    url(r'^api/client/risk/$', views.ClientInsuranceRiskListView.as_view(), name='client-insurance-risks'),
-    url(r'^api/client/risk/(?P<pk>\d+)/$', csrf_exempt(views.InsuranceRiskTakeView.as_view()), name='insurance-risk-take'),
-    url(r'^api/client/risk/(?P<pk>\d+)/edit/$', csrf_exempt(views.InsuranceRiskEditView.as_view()), name='insurance-risk-edit'),
+    url(r'^api/', include('risks.urls')),
+
+    # url(r'^api/risk/create/$', csrf_exempt(views.InsuranceRiskCreateView.as_view()), name='insurance-risk-create'),
+    # url(r'^api/client/risk/$', views.ClientInsuranceRiskListView.as_view(), name='client-insurance-risks'),
+    # url(r'^api/client/risk/(?P<pk>\d+)/$', csrf_exempt(views.InsuranceRiskTakeView.as_view()), name='insurance-risk-take'),
+    # url(r'^api/client/risk/(?P<pk>\d+)/edit/$', csrf_exempt(views.InsuranceRiskEditView.as_view()), name='insurance-risk-edit'),
     url(r'^admin/', admin.site.urls),
 ]
