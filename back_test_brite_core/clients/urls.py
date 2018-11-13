@@ -6,9 +6,25 @@ from . import views
 
 urlpatterns = [
     url(
-        r'^risk/(?P<pk>\d+)/$',
+        r'^risk/$',
+        views.ClientInsuranceRiskList.as_view(),
+        name='client-insurance-risks',
+    ),
+    url(
+        r'^risk/create/$',
+        # r'^risk/(?P<pk>\d+)/$',
         csrf_exempt(views.ClientInsuranceRiskCreate.as_view()),
         name='client-insurance-risk-create',
+    ),
+    url(
+        r'^risk/(?P<pk>\d+)/$',
+        csrf_exempt(views.ClientInsuranceRiskRetrieve.as_view()),
+        name='client-insurance-risk-edit',
+    ),
+    url(
+        r'^risk/(?P<pk>\d+)/edit/$',
+        csrf_exempt(views.ClientInsuranceRiskUpdate.as_view()),
+        name='client-insurance-risk-edit',
     ),
 
     # url(r'^api/risk/create/$', csrf_exempt(views.InsuranceRiskCreateView.as_view()), name='insurance-risk-create'),

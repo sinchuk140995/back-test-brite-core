@@ -42,3 +42,6 @@ class ClientField(models.Model):
         null=True,
         blank=True,
     )
+
+    class Meta:
+        ordering = ('field',)

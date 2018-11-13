@@ -20,4 +20,3 @@ class InsuranceRiskAdmin(admin.ModelAdmin):
 @admin.register(models.SelectOption)
 class SelectOptionAdmin(admin.ModelAdmin):
     pass
-

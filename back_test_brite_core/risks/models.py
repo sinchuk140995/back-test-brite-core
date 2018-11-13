@@ -38,6 +38,11 @@ class Field(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def is_select(self):
+        return self.field_type == self.SELECT
+
+
 
 class SelectOption(models.Model):
     name = models.CharField(_('name'), max_length=50)
