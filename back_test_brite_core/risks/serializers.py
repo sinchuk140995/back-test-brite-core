@@ -18,18 +18,20 @@ class SelectOptionSerializer(serializers.ModelSerializer):
 
 class FieldSerializer(serializers.ModelSerializer):
     options = SelectOptionSerializer(many=True, required=False)
+    field = serializers.IntegerField(source='id')   # another id field for creating ClientInsuranceRisk
 
     class Meta:
         model = models.Field
-        fields = ('id', 'name', 'field_type', 'options')
+        fields = ('id', 'field', 'name', 'field_type', 'options')
 
 
 class InsuranceRiskSerializer(serializers.ModelSerializer):
     fields = FieldSerializer(many=True)
+    insurance_risk = serializers.IntegerField(source='id')  # another id field for creating ClientInsuranceRisk
 
     class Meta:
         model = models.InsuranceRisk
-        fields = ('id', 'name', 'fields')
+        fields = ('id', 'insurance_risk', 'name', 'fields')
 
     def create(self, validated_data):
         fields_data = validated_data.pop('fields')

@@ -20,18 +20,18 @@ class ClientFieldSerializer(serializers.ModelSerializer):
 
 
 class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
-    client_fields = ClientFieldSerializer(many=True)
+    fields = ClientFieldSerializer(many=True)
 
     class Meta:
         model = models.ClientInsuranceRisk
-        fields = ('id', 'insurance_risk', 'post_date', 'client_fields')
+        fields = ('id', 'insurance_risk', 'post_date', 'fields')
 
     def create(self, validated_data):
-        client_fields = validated_data.pop('client_fields')
+        fields = validated_data.pop('fields')
         client_insurance_risk = models.ClientInsuranceRisk.objects \
             .create(**validated_data)
 
-        for field_data in client_fields:
+        for field_data in fields:
             models.ClientField.objects.create(
                 client_insurance_risk=client_insurance_risk,
                 **field_data
@@ -42,9 +42,9 @@ class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
         # instance.insurance_risk = validated_data.get('insurance_risk', instance.insurance_risk)
         # instance.save()
 
-        client_fields = validated_data.get('client_fields')
+        fields = validated_data.get('fields')
 
-        for field_data in client_fields:
+        for field_data in fields:
             field_id = field_data.get('id', None)
 
             if not field_id:

@@ -45,7 +45,7 @@ class ClientInsuranceRiskRetrieve(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         risk_fields = []
-        for client_field in client_insurance_risk.client_fields.all():
+        for client_field in client_insurance_risk.fields.all():
             field_data = {
                 'id': client_field.pk,
                 'field': client_field.field.pk,
@@ -70,7 +70,7 @@ class ClientInsuranceRiskRetrieve(APIView):
         insurance_data = {
             'insurance_risk': client_field.field.insurance_risk.id,
             'name': client_field.field.insurance_risk.name,
-            'client_fields': risk_fields,
+            'fields': risk_fields,
         }
 
         return Response(insurance_data)

@@ -23,7 +23,7 @@ class ClientField(models.Model):
     client_insurance_risk = models.ForeignKey(
         ClientInsuranceRisk,
         verbose_name=_('client insurance risk'),
-        related_name='client_fields',
+        related_name='fields',
     )
     field = models.ForeignKey(
         risk_models.Field,
