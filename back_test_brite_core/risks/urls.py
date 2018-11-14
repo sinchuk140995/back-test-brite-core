@@ -23,14 +23,9 @@ urlpatterns = [
         name='insurance-risk-detail',
     ),
 
-    url(
-        r'^risk/test/(?P<pk>\d+)/$',
-        views.TestInsuranceRiskRetrieve.as_view(),
-        name='insurance-risk-detail',
-    ),
-
-    # url(r'^api/client/risk/$', views.ClientInsuranceRiskListView.as_view(), name='client-insurance-risks'),
-    # url(r'^api/client/risk/(?P<pk>\d+)/$', csrf_exempt(views.InsuranceRiskTakeView.as_view()), name='insurance-risk-take'),
-    # url(r'^api/client/risk/(?P<pk>\d+)/edit/$', csrf_exempt(views.InsuranceRiskEditView.as_view()), name='insurance-risk-edit'),
-    # url(r'^admin/', admin.site.urls),
+    # url(
+    #     r'^risk/test/(?P<pk>\d+)/$',
+    #     views.TestInsuranceRiskRetrieve.as_view(),
+    #     name='insurance-risk-detail',
+    # ),
 ]

@@ -38,7 +38,7 @@ class ClientField(models.Model):
     select_option = models.ForeignKey(
         risk_models.SelectOption,
         verbose_name=_('selected option'),
-        related_name='client_options',
+        related_name='options',
         null=True,
         blank=True,
     )

@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
 from . import models
+from risks.models import SelectOption
+from risks.serializers import SelectOptionSerializer
 
 
 class ClientInsuranceRiskListSerializer(serializers.ModelSerializer):
@@ -13,18 +15,28 @@ class ClientInsuranceRiskListSerializer(serializers.ModelSerializer):
 
 class ClientFieldSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
+    field_type = serializers.CharField(source='field.field_type')
+    options = serializers.SerializerMethodField()
 
     class Meta:
         model = models.ClientField
-        fields = ('id', 'field', 'value', 'select_option')
+        fields = ('id', 'field', 'value',
+                  'select_option', 'field_type', 'options')
+
+    def get_options(self, obj):
+        if obj.select_option:
+            select_options = SelectOption.objects.filter(id=obj.select_option.id)
+            return SelectOptionSerializer(select_options, many=True).data
 
 
 class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
     fields = ClientFieldSerializer(many=True)
+    name = serializers.CharField(source='insurance_risk.name')
 
     class Meta:
         model = models.ClientInsuranceRisk
-        fields = ('id', 'insurance_risk', 'post_date', 'fields')
+        fields = ('id', 'insurance_risk', 'name',
+                  'post_date', 'fields')
 
     def create(self, validated_data):
         fields = validated_data.pop('fields')
