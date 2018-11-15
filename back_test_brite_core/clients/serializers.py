@@ -14,8 +14,8 @@ class ClientInsuranceRiskListSerializer(serializers.ModelSerializer):
 
 
 class ClientFieldSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=False)
-    field_type = serializers.CharField(source='field.field_type')
+    id = serializers.IntegerField(required=False)   # for accessing id in nested serializer
+    field_type = serializers.CharField(source='field.field_type', read_only=True)
     options = serializers.SerializerMethodField()
 
     class Meta:
@@ -25,13 +25,13 @@ class ClientFieldSerializer(serializers.ModelSerializer):
 
     def get_options(self, obj):
         if obj.select_option:
-            select_options = SelectOption.objects.filter(id=obj.select_option.id)
+            select_options = SelectOption.objects.filter(field=obj.select_option.field)
             return SelectOptionSerializer(select_options, many=True).data
 
 
 class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
     fields = ClientFieldSerializer(many=True)
-    name = serializers.CharField(source='insurance_risk.name')
+    name = serializers.CharField(source='insurance_risk.name', read_only=True)
 
     class Meta:
         model = models.ClientInsuranceRisk
@@ -57,6 +57,7 @@ class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
         fields = validated_data.get('fields')
 
         for field_data in fields:
+            print(field_data)
             field_id = field_data.get('id', None)
 
             if not field_id:
@@ -70,5 +71,3 @@ class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
             client_field.save()
 
         return instance
-
-

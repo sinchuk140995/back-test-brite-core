@@ -22,16 +22,17 @@ class ClientInsuranceRiskRetrieveUpdate(generics.RetrieveUpdateAPIView):
     queryset = models.ClientInsuranceRisk.objects.all()
     serializer_class = serializers.ClientInsuranceRiskSerializer
 
+    def patch(self, request, *args, **kwargs):
+        print(request.data)
+        return self.partial_update(request, *args, **kwargs)
 
 # class ClientInsuranceRiskUpdate(generics.UpdateAPIView):
 #     queryset = models.ClientInsuranceRisk.objects.all()
 #     serializer_class = serializers.ClientInsuranceRiskSerializer
 
-
 # class TestClientInsuranceRiskRetrieve(generics.RetrieveAPIView):
 #     queryset = models.ClientInsuranceRisk.objects.all()
 #     serializer_class = serializers.ClientInsuranceRiskSerializer
-
 
 # class ClientInsuranceRiskRetrieve(APIView):
 
