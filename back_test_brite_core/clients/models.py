@@ -5,6 +5,7 @@ from risks import models as risk_models
 
 
 class ClientInsuranceRisk(models.Model):
+    # make relation m2m
     insurance_risk = models.ForeignKey(
         risk_models.InsuranceRisk,
         verbose_name=_('insurance risk'),

@@ -18,7 +18,7 @@ class SelectOptionSerializer(serializers.ModelSerializer):
 
 class FieldSerializer(serializers.ModelSerializer):
     options = SelectOptionSerializer(many=True, required=False)
-    field = serializers.IntegerField(source='id')   # another id field for creating ClientInsuranceRisk
+    field = serializers.IntegerField(source='id', read_only=True)   # another id field for creating ClientInsuranceRisk
 
     class Meta:
         model = models.Field
@@ -27,7 +27,7 @@ class FieldSerializer(serializers.ModelSerializer):
 
 class InsuranceRiskSerializer(serializers.ModelSerializer):
     fields = FieldSerializer(many=True)
-    insurance_risk = serializers.IntegerField(source='id')  # another id field for creating ClientInsuranceRisk
+    insurance_risk = serializers.IntegerField(source='id', read_only=True)  # another id field for creating ClientInsuranceRisk
 
     class Meta:
         model = models.InsuranceRisk
