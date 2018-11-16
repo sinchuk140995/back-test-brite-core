@@ -14,7 +14,7 @@ class ClientInsuranceRiskListSerializer(serializers.ModelSerializer):
 
 
 class ClientFieldSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=False, read_only=True)   # for accessing id in nested serializer
+    id = serializers.IntegerField(required=False)   # for accessing id in nested serializer
     name = serializers.CharField(source='field.name', read_only=True)
     field_type = serializers.CharField(source='field.field_type', read_only=True)
     options = serializers.SerializerMethodField()
@@ -30,12 +30,18 @@ class ClientFieldSerializer(serializers.ModelSerializer):
             return SelectOptionSerializer(select_options, many=True).data
 
     def validate(self, data):
-
         if data.get('value') and data.get('select_option'):
             raise serializers.ValidationError('You cannot choose value and option')
         elif not (data.get('value') or data.get('select_option')):
             raise serializers.ValidationError('Choose value or option')
         return data
+
+
+class ClientFieldCreateSerializer(ClientFieldSerializer):
+    class Meta:
+        model = models.ClientField
+        fields = ('field', 'value', 'name',
+                  'select_option', 'field_type', 'options')
 
 
 class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
@@ -79,3 +85,7 @@ class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
             client_field.save()
 
         return instance
+
+
+class ClientInsuranceRiskCreateSerializer(ClientInsuranceRiskSerializer):
+    fields = ClientFieldCreateSerializer(many=True)

@@ -11,7 +11,7 @@ class ClientInsuranceRiskList(generics.ListAPIView):
 
 class ClientInsuranceRiskCreate(generics.CreateAPIView):
     queryset = models.ClientInsuranceRisk.objects.all()
-    serializer_class = serializers.ClientInsuranceRiskSerializer
+    serializer_class = serializers.ClientInsuranceRiskCreateSerializer
 
 
 class ClientInsuranceRiskRetrieveUpdate(generics.RetrieveUpdateAPIView):
