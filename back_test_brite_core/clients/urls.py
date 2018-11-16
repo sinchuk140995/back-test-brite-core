@@ -26,9 +26,4 @@ urlpatterns = [
         csrf_exempt(views.ClientInsuranceRiskRetrieveUpdate.as_view()),
         name='client-insurance-risk-edit',
     ),
-    # url(
-    #     r'^risk/test/(?P<pk>\d+)/$',
-    #     csrf_exempt(views.ClientInsuranceRiskRetrieve.as_view()),
-    #     name='client-insurance-risk-retrieve',
-    # ),
 ]

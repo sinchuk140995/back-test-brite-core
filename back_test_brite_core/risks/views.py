@@ -1,12 +1,4 @@
-from django.http import JsonResponse
-from django.views import generic
 from rest_framework import generics
-from rest_framework import mixins
-from rest_framework.views import APIView
-from rest_framework import status
-from rest_framework.response import Response
-
-import json
 
 from . import models
 from . import serializers

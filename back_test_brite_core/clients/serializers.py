@@ -6,7 +6,7 @@ from risks.serializers import SelectOptionSerializer
 
 
 class ClientInsuranceRiskListSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(source='insurance_risk.name')
+    name = serializers.CharField(source='insurance_risk.name', read_only=True)
 
     class Meta:
         model = models.ClientInsuranceRisk
@@ -14,13 +14,14 @@ class ClientInsuranceRiskListSerializer(serializers.ModelSerializer):
 
 
 class ClientFieldSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=False)   # for accessing id in nested serializer
+    id = serializers.IntegerField(required=False, read_only=True)   # for accessing id in nested serializer
+    name = serializers.CharField(source='field.name', read_only=True)
     field_type = serializers.CharField(source='field.field_type', read_only=True)
     options = serializers.SerializerMethodField()
 
     class Meta:
         model = models.ClientField
-        fields = ('id', 'field', 'value',
+        fields = ('id', 'field', 'value', 'name',
                   'select_option', 'field_type', 'options')
 
     def get_options(self, obj):
