@@ -29,6 +29,14 @@ class ClientFieldSerializer(serializers.ModelSerializer):
             select_options = SelectOption.objects.filter(field=obj.select_option.field)
             return SelectOptionSerializer(select_options, many=True).data
 
+    def validate(self, data):
+
+        if data.get('value') and data.get('select_option'):
+            raise serializers.ValidationError('You cannot choose value and option')
+        elif not (data.get('value') or data.get('select_option')):
+            raise serializers.ValidationError('Choose value or option')
+        return data
+
 
 class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
     fields = ClientFieldSerializer(many=True)
@@ -58,7 +66,6 @@ class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
         fields = validated_data.get('fields')
 
         for field_data in fields:
-            print(field_data)
             field_id = field_data.get('id', None)
 
             if not field_id:
