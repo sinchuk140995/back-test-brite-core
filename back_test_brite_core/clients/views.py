@@ -4,20 +4,16 @@ from . import models
 from . import serializers
 
 
-class ClientInsuranceRiskList(generics.ListAPIView):
+class ClientInsuranceRiskListView(generics.ListAPIView):
     queryset = models.ClientInsuranceRisk.objects.all()
     serializer_class = serializers.ClientInsuranceRiskListSerializer
 
 
-class ClientInsuranceRiskCreate(generics.CreateAPIView):
+class ClientInsuranceRiskCreateView(generics.CreateAPIView):
     queryset = models.ClientInsuranceRisk.objects.all()
     serializer_class = serializers.ClientInsuranceRiskCreateSerializer
 
 
-class ClientInsuranceRiskRetrieveUpdate(generics.RetrieveUpdateAPIView):
+class ClientInsuranceRiskRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     queryset = models.ClientInsuranceRisk.objects.all()
     serializer_class = serializers.ClientInsuranceRiskSerializer
-
-    def patch(self, request, *args, **kwargs):
-        print(request.data)
-        return self.partial_update(request, *args, **kwargs)

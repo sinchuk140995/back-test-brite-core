@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class InsuranceRisk(models.Model):
-    name = models.CharField(_('name'), max_length=50)
+    name = models.CharField(_('name'), max_length=50, unique=True)
     post_date = models.DateTimeField(_('post date'), auto_now_add=True)
 
     class Meta:
@@ -41,7 +41,6 @@ class Field(models.Model):
     @property
     def is_select(self):
         return self.field_type == self.SELECT
-
 
 
 class SelectOption(models.Model):

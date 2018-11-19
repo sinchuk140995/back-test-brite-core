@@ -4,17 +4,17 @@ from . import models
 from . import serializers
 
 
-class InsuranceRiskList(generics.ListAPIView):
+class InsuranceRiskListView(generics.ListAPIView):
     queryset = models.InsuranceRisk.objects.all()
     serializer_class = serializers.InsuranceRiskListSerializer
 
 
-class InsuranceRiskCreate(generics.CreateAPIView):
+class InsuranceRiskCreateView(generics.CreateAPIView):
     queryset = models.InsuranceRisk.objects.all()
     serializer_class = serializers.InsuranceRiskSerializer
 
 
-class InsuranceRiskRetrieve(generics.RetrieveAPIView):
+class InsuranceRiskRetrieveView(generics.RetrieveAPIView):
     serializer_class = serializers.InsuranceRiskSerializer
     queryset = models.InsuranceRisk.objects.all()
 

@@ -24,6 +24,15 @@ class FieldSerializer(serializers.ModelSerializer):
         model = models.Field
         fields = ('id', 'field', 'name', 'field_type', 'options')
 
+    def validate(self, data):
+        field_type = data.get('field_type')
+        options = data.get('options', [])
+        if field_type == models.Field.SELECT and len(options) == 0:
+            raise serializers.ValidationError(
+                'Cannot create enum field without options'
+            )
+        return data
+
 
 class InsuranceRiskSerializer(serializers.ModelSerializer):
     fields = FieldSerializer(many=True)
