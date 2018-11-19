@@ -30,7 +30,7 @@ class Field(models.Model):
         related_name='fields',
     )
     # field_type = models.PositiveSmallIntegerField(_('type'), choices=TYPE_CHOICES)
-    field_type = models.CharField(_('type'), max_length=10)
+    field_type = models.CharField(_('type'), max_length=10, choices=TYPE_CHOICES)
 
     # class Meta:
     #     ordering = ('name',)
