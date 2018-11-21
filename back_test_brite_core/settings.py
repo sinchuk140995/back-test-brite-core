@@ -142,4 +142,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-CORS_ORIGIN_WHITELIST = config('ALLOWED_HOSTS', cast=Csv())
+if DEBUG:
+    CORS_ORIGIN_WHITELIST = [
+        'localhost:8081',
+        'localhost:8080',
+        '127.0.0.1:8081',
+        '127.0.0.1:8080',
+    ]
+else:
+    CORS_ORIGIN_WHITELIST = config('ALLOWED_HOSTS', cast=Csv())
