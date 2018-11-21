@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.views.decorators.csrf import csrf_exempt
 
 from . import views
 
@@ -10,17 +9,19 @@ urlpatterns = [
         views.InsuranceRiskListView.as_view(),
         name='insurance-risk-list',
     ),
-
     url(
         r'^risk/create/$',
         views.InsuranceRiskCreateView.as_view(),
         name='insurance-risk-create',
     ),
-
     url(
         r'^risk/(?P<pk>\d+)/$',
-        views.InsuranceRiskRetrieveView.as_view(),
+        views.InsuranceRiskRetrieveDestroyView.as_view(),
         name='insurance-risk-detail',
     ),
-
+    url(
+        r'^risk/(?P<pk>\d+)/delete/$',
+        views.InsuranceRiskRetrieveDestroyView.as_view(),
+        name='insurance-risk-delete',
+    ),
 ]

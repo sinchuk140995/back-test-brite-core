@@ -12,18 +12,22 @@ urlpatterns = [
     ),
     url(
         r'^risk/create/$',
-        # r'^risk/(?P<pk>\d+)/$',
         csrf_exempt(views.ClientInsuranceRiskCreateView.as_view()),
         name='client-insurance-risk-create',
     ),
     url(
         r'^risk/(?P<pk>\d+)/$',
-        csrf_exempt(views.ClientInsuranceRiskRetrieveUpdateView.as_view()),
+        csrf_exempt(views.ClientInsuranceRiskRetrieveUpdateDestroyView.as_view()),
         name='client-insurance-risk-retrieve',
     ),
     url(
         r'^risk/(?P<pk>\d+)/edit/$',
-        csrf_exempt(views.ClientInsuranceRiskRetrieveUpdateView.as_view()),
+        csrf_exempt(views.ClientInsuranceRiskRetrieveUpdateDestroyView.as_view()),
         name='client-insurance-risk-edit',
+    ),
+    url(
+        r'^risk/(?P<pk>\d+)/delete/$',
+        csrf_exempt(views.ClientInsuranceRiskRetrieveUpdateDestroyView.as_view()),
+        name='client-insurance-risk-delete',
     ),
 ]

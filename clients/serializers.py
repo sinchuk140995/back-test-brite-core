@@ -66,9 +66,6 @@ class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
         return client_insurance_risk
 
     def update(self, instance, validated_data):
-        # instance.insurance_risk = validated_data.get('insurance_risk', instance.insurance_risk)
-        # instance.save()
-
         fields = validated_data.get('fields')
 
         for field_data in fields:
