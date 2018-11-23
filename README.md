@@ -1,24 +1,74 @@
 # back-test-brite-core
-back-test-brite-core is a project that represents API using Django REST framework. The actual code of the project's apps implements creating, editing and deleting risk types and policies.
 
-* Python 3.6.7
-* Django 1.11
-* Django REST framework 3.9.0
+> An Django project that implements API using the Django REST Framework (DRF). The project implements creating, editing and deleting risk types and policies.
 
-This tutorial passes through all the steps to build the app, while the rest of the documentation describes the app structure and tests.
+### Prerequisites
 
-# Directory layout
+Make sure Python 3 is installed:
+```console
+python -V
+```
 
-back-test-brite-core directory structure looks as follows:
+```output
+3.6.7
+```
+
+For installing system packages will be used **APT** - a set of tools for managing Debian packages.
+
+Install PIP first:
+```console
+sudo apt-get install -y python3-pip
+```
+
+Install virtualenv using pip3:
+```console
+sudo pip3 install virtualenv
+```
+
+### Installing
+
+Clone the repository:
+```console
+git clone git@github.com:sinchuk140995/back-test-brite-core.git
+```
+
+Go to the project folder and run the command for a virtual environment creating:
+```console
+virtualenv env
+```
+
+Activate the virtualenv:
+```console
+source env/bin/activate
+```
+
+Install the Python dependencies from requirements.txt:
+```console
+pip install -r requirements.txt
+```
+
+Apply the project migrations:
+```console
+python manage.py migrate
+```
+
+Run the Django development server:
+```console
+python manage.py runserver
+```
+
+## Project structure
+
+back-test-brite-core folder structure looks as follows:
 
     back_test_brite_core/
     ├── back_test_brite_core
     ├── clients
     └── risks
 
-The 3 root level directories separate the **project folder** (back_test_brite_core) and **two app folders** (clients, risks).
+The 3 root level folders separate the **project folder** (back_test_brite_core) and **two app folders** (clients, risks).
 
-The root level directory contains the following files:
+The root level folder contains the following files:
 
     back_test_brite_core/
     ├── manage.py
@@ -26,28 +76,28 @@ The root level directory contains the following files:
     ├── requirements.txt
     └── runtime.txt
 
-# The back-test-brite-core projects directory
+### back_test_brite_core folder
 
-The inner **back-test-brite-core** directory is the actual Python package for the project.
+The inner **back_test_brite_core** folder is the actual Python package for the project.
 
 The content:
 
-    back-test-brite-core/
+    back_test_brite_core/
     ├── __init__.py
     ├── settings.py
     ├── urls.py
     └── wsgi.py
 
-* **__init__.py:** An empty file that tells Python that this directory should be considered a Python package.
-* **settings.py:** Settings/configuration for this Django project. Django settings will tell you all about how settings work.
-* **urls.py:** The URL declarations for this Django project; a “table of contents” of your Django-powered site.
+* **__init__.py:** An empty file that tells Python that this folder should be considered a Python package.
+* **settings.py:** Settings/configuration for this Django project.
+* **urls.py:** The URL declarations for this Django project.
 * **wsgi.py:** An entry-point for WSGI-compatible web servers to serve your project.
 
-# The app clients
+### clients folder
 
 The app contains models, views, serializers, etc for managing the policies.
 
-App's source code directory layout:
+App's source code folder layout:
 
     clients/
     ├── __init__.py
@@ -65,11 +115,11 @@ The models.py file contains next models:
   * field _value_ stores text and number values.
   * field _select_option_ is a foreign key to the model SelectOption and stores enum option.
 
-# The app risks
+### risks folder
 
 The app contains models, views, serializers, etc for managing the risk types.
 
-App's source code directory layout:
+App's source code folder layout:
 
     risks/
     ├── __init__.py
@@ -86,7 +136,10 @@ The models.py file contains next models:
 * **Field** - describes a risk type fields.
 * **SelectOption** - describes enum fields options.
 
-# Entity-Attribute-Value (EAV) models
+
+## Database
+
+### Entity-Attribute-Value (EAV) models
 
 Basic object-relational models in Python Django do not allow users to modify the data model within the application. For example, insurance risk type involve variables such as name, date, etc. The basic model for collecting that data in Django would define every one of those variables in advance in our Python code, from which Django creates an object-relational mapping that amounts to a database table with one column for each variable.
 
@@ -94,24 +147,25 @@ This is a particularly common request for applications involving collection of d
 
 In our case accordingly to EAV models: _entity_ is **risks/InsuranceRisk**, _attribute_ is **risks/Field** and _value_ is **clients/ClientField**.
 
-# Database diagram
+### Database diagram
 
 ![Database diagram](database_diagram.png)
 
 
-# Tests
+## Running the tests
 
-* **clients/test.py** contains unit tests for clients app's API views
-* **risks/test.py** contains unit tests for risks app's API views
-
-Run the following command to start the testing:
+Run the following command to start unit tests:
 ```console
 python manage.py tests
 ```
 
-# Deploy
+* **clients/test.py** contains unit tests for clients app's API views
+* **risks/test.py** contains unit tests for risks app's API views
 
-Project contains all necessary files for deploy to the PasS-platform **Heroku**:
+
+## Deployment
+
+The project contains all necessary files and requirements for deploy to the PasS-platform **Heroku**:
 
 * **Procfile** - a file is used to explicitly declare your application’s process types and entry points.
 * **requirements.txt** - a file that contains the required versions of dependent packages.
@@ -156,3 +210,9 @@ heroku run python manage.py migrate
 ```
 
 And there you go!
+
+## Built With
+
+* [Django](https://www.djangoproject.com/) - a high-level Python Web framework.
+* [Django REST framework](https://www.django-rest-framework.org/) - a powerful and flexible toolkit for building Web APIs.
+* [django-cors-headers](https://github.com/ottoyiu/django-cors-headers) - a Django App that adds CORS (Cross-Origin Resource Sharing) headers to responses.
