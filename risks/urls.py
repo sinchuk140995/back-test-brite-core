@@ -24,4 +24,9 @@ urlpatterns = [
         views.InsuranceRiskRetrieveDestroyView.as_view(),
         name='insurance-risk-delete',
     ),
+    url(
+        r'^field/(?P<pk>\d+)/delete/$',
+        views.FieldDestroyView.as_view(),
+        name='field-delete',
+    ),
 ]

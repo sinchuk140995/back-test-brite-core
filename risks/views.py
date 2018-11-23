@@ -17,3 +17,8 @@ class InsuranceRiskCreateView(generics.CreateAPIView):
 class InsuranceRiskRetrieveDestroyView(generics.RetrieveDestroyAPIView):
     serializer_class = serializers.InsuranceRiskSerializer
     queryset = models.InsuranceRisk.objects.all()
+
+
+class FieldDestroyView(generics.DestroyAPIView):
+    serializer_class = serializers.FieldSerializer
+    queryset = models.Field.objects.all()
