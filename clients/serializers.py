@@ -14,14 +14,13 @@ class ClientInsuranceRiskListSerializer(serializers.ModelSerializer):
 
 
 class ClientFieldSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=False)   # for accessing id in nested serializer
     name = serializers.CharField(source='field.name', read_only=True)
     field_type = serializers.CharField(source='field.field_type', read_only=True)
     options = serializers.SerializerMethodField()
 
     class Meta:
         model = models.ClientField
-        fields = ('id', 'field', 'value', 'name',
+        fields = ('field', 'value', 'name',
                   'select_option', 'field_type', 'options')
 
     def get_options(self, obj):
@@ -38,14 +37,36 @@ class ClientFieldSerializer(serializers.ModelSerializer):
 
 
 class ClientFieldCreateSerializer(ClientFieldSerializer):
-    class Meta:
-        model = models.ClientField
-        fields = ('field', 'value', 'name',
-                  'select_option', 'field_type', 'options')
+    class Meta(ClientFieldSerializer.Meta):
+        pass
+
+
+class ClientFieldEditSerializer(ClientFieldSerializer):
+    id = serializers.IntegerField()   # for accessing id in nested serializer
+
+    class Meta(ClientFieldSerializer.Meta):
+        fields = ClientFieldSerializer.Meta.fields + ('id', 'client_insurance_risk')
+
+    def validate(self, data):
+        client_field_id = data.get('id')
+        client_insurance_risk = data.get('client_insurance_risk')
+        try:
+            models.ClientField.objects.get(
+                id=client_field_id,
+                client_insurance_risk=client_insurance_risk,
+            )
+        except models.ClientField.DoesNotExist:
+            raise serializers.ValidationError(
+                'Invalid pk "{}" and insurance type "{}" - field does not exist'.format(
+                    client_field_id,
+                    client_insurance_risk,
+                )
+            )
+        return data
 
 
 class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
-    fields = ClientFieldSerializer(many=True)
+    fields = ClientFieldEditSerializer(many=True)
     name = serializers.CharField(source='insurance_risk.name', read_only=True)
 
     class Meta:
@@ -69,11 +90,7 @@ class ClientInsuranceRiskSerializer(serializers.ModelSerializer):
         fields = validated_data.get('fields')
 
         for field_data in fields:
-            field_id = field_data.get('id', None)
-
-            if not field_id:
-                continue
-
+            field_id = field_data['id']
             client_field = models.ClientField.objects.get(id=field_id, client_insurance_risk=instance)
             if client_field.field.is_select:
                 client_field.select_option = field_data.get('select_option', client_field.select_option)
