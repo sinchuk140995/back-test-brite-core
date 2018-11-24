@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from .models import InsuranceRisk
+from .models import InsuranceRisk, Field
 
 
 class InsuranceRiskListViewTest(APITestCase):
@@ -102,5 +102,23 @@ class InsuranceRiskCreateViewTest(APITestCase):
 
     def test_delete_risk(self):
         url = reverse('insurance-risk-delete', kwargs={'pk': InsuranceRisk.objects.first().pk})
+        response = self.client.delete(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class FieldDestroyViewTest(APITestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        insurance_risk = InsuranceRisk.objects.create(id=1, name='Risk')
+        Field.objects.create(
+            id=1,
+            name='Text field',
+            field_type=Field.STRING,
+            insurance_risk=insurance_risk,
+        )
+
+    def test_delete_risk(self):
+        url = reverse('field-delete', kwargs={'pk': Field.objects.first().pk})
         response = self.client.delete(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
